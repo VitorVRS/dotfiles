@@ -1,0 +1,19 @@
+#!/usr/bin/env zsh
+
+BASE_DIR=$(dirname $0)
+
+# Diretorio de destino
+CONFIG_DIR="$HOME/.config"
+FILES="$BASE_DIR/configs"
+
+# zsh
+if [ -d "$FILES/zsh"]
+then
+  cp "$FILES/zsh/.zshrc" "$HOME/.zshrc"
+fi
+
+# sublime-text 3
+if [ -d "$FILES/sublime-text-3" ]
+then
+  cp -rf "$FILES/sublime-text-3" "$CONFIG_DIR/"
+fi
