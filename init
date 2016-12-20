@@ -1,10 +1,36 @@
 #!/usr/bin/env zsh
 
+DEBUG=0
+
+if [ "$1" = "-q"  ] 
+then
+  DEBUG=1
+fi
+
 BASE_DIR=$(dirname $0)
+
+source "$BASE_DIR/vars"
 
 # Diretorio de destino
 CONFIG_DIR="$HOME/.config"
+
+# My configurations
 FILES="$BASE_DIR/configs"
+
+__exec() {
+
+  if [ $DEBUG = 1 ]
+  then
+    echo "Debugging: $@"
+  else
+    echo "Executing this: " $@
+  fi
+
+}
+
+###############################################################################
+############################### MAIN PROGRAM ##################################
+###############################################################################
 
 # zsh
 if [ -d "$FILES/zsh"]
@@ -13,7 +39,14 @@ then
 fi
 
 # sublime-text 3
+if [ ! -e /usr/local/bin/subl ]
+then
+  echo "Installing Sublime Text 3"
+  __exec "wget $SUBLIME_URL -o sublime.tar.bz2"
+fi
+
 if [ -d "$FILES/sublime-text-3" ]
 then
-  cp -rf "$FILES/sublime-text-3" "$CONFIG_DIR/"
+  echo "Configuring sublime-text-3"
+  __exec cp -rf "$FILES/sublime-text-3" "$CONFIG_DIR/"
 fi
