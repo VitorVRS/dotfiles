@@ -1,0 +1,29 @@
+#!/usr/bin/env zsh
+
+source "src/help.sh"
+source "src/install.sh"
+source "src/configure.sh"
+source "src/functions.sh"
+
+__main() {
+
+	__array_shift $@
+	args=$__array_shift_ret
+
+	case $1 in 
+
+		"install")
+			__install $args
+		;;
+
+		"configure")
+			__configure $args
+		;;
+
+		*)
+			__help $args
+		;;
+	esac
+}
+
+__main $@;
