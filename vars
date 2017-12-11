@@ -1,3 +1,14 @@
+#!/usr/bin/env zsh
 
-# sublime text 3 download url
-SUBLIME_URL="https://download.sublimetext.com/sublime_text_3_build_3126_x64.tar.bz2"
+if [ -z $DEBUG  ];
+then
+	DEBUG=0
+fi
+
+BASE_DIR=$(dirname $0)
+
+# Diretorio de destino
+CONFIG_DIR="$HOME/.config"
+
+# My configurations
+FILES="$BASE_DIR/configs"

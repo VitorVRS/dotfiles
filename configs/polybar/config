@@ -1,0 +1,289 @@
+[colors]
+;background = ${xrdb:color0:#222}
+background = #333842
+background-alt = #4D5565
+border = #454D5B
+;foreground = ${xrdb:color7:#222}
+foreground = #CFD1D5
+foreground-alt = #BDC2CB
+primary = #7DABB8
+secondary = #e60053
+alert = #A95D64
+
+[bar/left]
+monitor = ${env:MONITOR:HDMI-0}
+width = 100%
+height = 28
+fixed-center = true
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-bottom-size = 2
+border-color = ${colors.border}
+
+padding-left = 5
+padding-right = 5
+
+module-margin-left = 3
+module-margin-right = 2
+
+font-0 = SFNSDisplay:size=11;2
+font-1 = FontAwesome:size=10;3
+font-2 = MaterialIcons:size=10;3
+
+modules-left = i3
+modules-center = date 
+modules-right = 
+
+tray-position = right
+tray-padding = 2
+
+wm-restack = i3
+
+[bar/right]
+monitor = ${env:MONITOR:DVI-I-0}
+width = 100%
+height = 28
+fixed-center = true
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-bottom-size = 2
+border-color = ${colors.border}
+
+padding-left = 5
+padding-right = 5
+
+module-margin-left = 3
+module-margin-right = 2
+
+font-0 = SFNSDisplay:size=11;2
+font-1 = FontAwesome:size=10;3
+font-2 = MaterialIcons:size=10;3
+
+modules-left = i3
+modules-center = date 
+modules-right = uptime mpd volume network memory cpu powermenu
+
+tray-position = right
+tray-padding = 2
+
+wm-restack = i3
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %icon%
+label-focused-background = ${colors.background-alt}
+label-focused-padding = 4
+
+label-occupied = %icon%
+label-occupied-padding = 4
+
+label-urgent = %icon%!
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 4
+
+label-empty = %icon%
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 4
+
+[module/i3]
+type = internal/i3
+pin-workspaces = true
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+fuzzy-match = true
+strip-wsnumbers = true
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3; 
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;10
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %icon%
+label-focused-background = ${module/bspwm.label-focused-background}
+label-focused-padding = ${module/bspwm.label-focused-padding}
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %icon%
+label-unfocused-padding = ${module/bspwm.label-occupied-padding}
+
+; visible = Active workspace on unfocused monitor
+label-visible = %icon%
+label-visible-background = ${self.label-focused-background}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %icon%
+label-urgent-background = ${module/bspwm.label-urgent-background}
+label-urgent-padding = ${module/bspwm.label-urgent-padding}
+
+[module/cpu]
+type = internal/cpu
+interval = 3
+format-prefix = "CPU  "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %percentage%%
+
+[module/memory]
+type = internal/memory
+interval = 3
+format-prefix = "RAM "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %percentage_used%%
+
+[module/network]
+type = internal/network
+interface = eno1
+interval = 3.0
+
+format-connected = <ramp-signal> <label-connected>
+label-connected = Conectado | %upspeed% | %downspeed%
+label-connected-foreground = ${colors.foreground}
+label-disconnected =  
+label-disconnected-foreground = ${colors.foreground}
+
+ramp-signal-0 = 
+
+[module/uptime]
+type = custom/script
+interval = 30
+exec = ~/.config/polybar/uptime.sh
+label = %output%
+format = <label>
+format-prefix = "Uptime: "
+format-prefix-foreground = ${colors.foreground-alt}
+
+[module/date]
+type = internal/date
+interval = 1
+
+date = "%A, %b %d "
+date-alt = " %d %m %Y "
+
+time = "%H:%M"
+time-alt = %H:%M:%S
+
+format-prefix = "   "
+format-prefix-foreground = ${colors.foreground}
+
+label = %date% %time%
+
+[module/weather]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = "   "
+format-prefix-foreground = ${colors.foreground}
+exec = ~/.config/polybar/weather
+
+[module/volume]
+type = internal/volume
+
+format-volume = <ramp-volume> <label-volume>
+label-volume = %percentage:3:3%%
+label-volume-foreground = ${root.foreground}
+
+format-muted = <label-muted>
+label-muted = muted
+label-muted-foreground = ${colors.foreground}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-foreground = ${colors.foreground-alt}
+
+[module/mpd]
+type = internal/mpd
+clickable-progress = true
+format-online = <icon-prev> <icon-stop> <toggle> <icon-next>  <icon-repeat> <icon-random>  <bar-progress> <label-time>  <label-song>
+
+icon-play = 
+icon-pause = 
+icon-stop = 
+icon-prev = 
+icon-next = 
+icon-random = 
+icon-repeat = 
+
+toggle-on-foreground =
+toggle-off-foreground = #55
+
+bar-progress-width = 45
+bar-progress-format = %{A4:mpdseek+2: A5:mpdseek-2:}%fill%%indicator%%empty%%{A A}
+bar-progress-indicator = |
+bar-progress-indicator-foreground = #ff
+bar-progress-indicator-font = 3
+bar-progress-fill = ─
+bar-progress-fill-foreground = #bb
+bar-progress-fill-font = 3
+bar-progress-empty = ─
+bar-progress-empty-font = 3
+bar-progress-empty-foreground = #44
+
+[module/powermenu]
+type = custom/menu
+
+format-spacing = 2
+
+label-open = "" 
+label-open-foreground = ${colors.primary}
+label-close =  cancel
+label-close-foreground = ${colors.primary}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+
+menu-0-0 = reboot
+menu-0-0-exec = menu-open-1
+menu-0-1 = power off
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = cancel
+menu-1-0-exec = menu-open-0
+menu-1-1 = reboot
+menu-1-1-exec = sudo reboot
+
+menu-2-0 = power off
+menu-2-0-exec = poweroff
+menu-2-1 = cancel
+menu-2-1-exec = menu-open-0
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini
